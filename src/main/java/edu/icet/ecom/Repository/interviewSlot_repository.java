@@ -5,7 +5,5 @@ import edu.icet.ecom.Model.Dto.interviewSlot_dto;
 import java.util.List;
 
 public interface interviewSlot_repository {
-    List<interviewSlot_dto> getAllSlots();
 
-    void addSlots();
 }
