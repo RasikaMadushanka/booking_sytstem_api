@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class candidater_dto {
+public class interviewer_dto {
 
     private Long id;
-    private String firstname;
-    private String lastname;
+    private String name;
     private String email;
+    private String department;
 }

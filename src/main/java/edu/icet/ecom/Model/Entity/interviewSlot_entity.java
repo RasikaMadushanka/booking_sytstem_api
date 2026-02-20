@@ -1,12 +1,7 @@
 package edu.icet.ecom.Model.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDate;
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "interview_slot")
 public class interviewSlot_entity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,9 +25,12 @@ public class interviewSlot_entity {
     @Column(nullable = false)
     private boolean status = false;
 
-    private String action;
-    private String descriptionm;
-    private LocalDate date;
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "interviewer_id", nullable = false)
+    private interviewer_entity interviewer;
+
+    @OneToOne(mappedBy = "interviewSlot", cascade = CascadeType.ALL)
+    private booking_entity booking;
 }
-
-

@@ -1,20 +1,22 @@
 package edu.icet.ecom.Model.Dto;
 
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class interviewSlot_dto {
+public class booking_dto {
 
-    private Long id;
+    private Long interviewSlotId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean status;
-    private String description;
-    private String bookedBy;
-    private String action; // Available / Booked / Expired
+
+    private String interviewerName;
+    private String interviewerDepartment;
+
+    private String candidateName;
+    private String candidateEmail;
 }

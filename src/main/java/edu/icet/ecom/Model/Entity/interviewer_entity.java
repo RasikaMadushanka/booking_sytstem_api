@@ -8,14 +8,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "candidate")
-public class candidater_entity {
+@Table(name = "interviewer")
+public class interviewer_entity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstname;
-    private String lastname;
+    private String name;
     private String email;
+    private String department;
 }

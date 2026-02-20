@@ -6,41 +6,45 @@ import edu.icet.ecom.Repository.candidate_repository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Service
 public class candidate_service {
-    @Autowired
-    candidate_repository candidate_Repository;
-    ModelMapper modelMapper =new ModelMapper();
 
-    public List<candidater_dto> getAllSlots() {
-        List<candidater_entity>candiList = candidate_Repository.findAll();
-        return candiList.stream().map((element)->
-                        modelMapper.map(element, candidater_dto.class))
+    @Autowired
+    private candidate_repository candidateRepository;
+
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    public List<candidater_dto> getAllCandidate() {
+        return candidateRepository.findAll().stream()
+                .map(c -> modelMapper.map(c, candidater_dto.class))
                 .toList();
     }
 
-    public void addCandidate(candidater_dto candidatedto) {
-        candidater_entity addCandidater = modelMapper.map(candidatedto, candidater_entity.class);
-        candidate_Repository.save(addCandidater);
+    public void addCandidate(candidater_dto dto) {
+        candidater_entity candidate = modelMapper.map(dto, candidater_entity.class);
+        candidateRepository.save(candidate);
     }
 
-    public candidater_dto updateCandidate(Long id, candidater_dto candidatedto) {
-        candidater_entity existingCandi= candidate_Repository.findById(id).orElseThrow(()-> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,"category Not Found with id"+id));
-        existingCandi.setFirstname(candidatedto.getFirstname());
-        candidater_entity updatecandi = candidate_Repository.save(existingCandi);
-        return modelMapper.map(updatecandi, candidater_dto.class);
+    public candidater_dto updateCandidate(Long id, candidater_dto dto) {
+        candidater_entity existing = candidateRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Candidate not found with ID: " + id));
+
+        existing.setFirstname(dto.getFirstname());
+        existing.setLastname(dto.getLastname());
+        existing.setEmail(dto.getEmail());
+
+        return modelMapper.map(candidateRepository.save(existing), candidater_dto.class);
     }
 
     public void deleteCandidate(Long id) {
-        if(candidate_Repository.existsById(id)){
-            candidate_Repository.deleteById(id);
+        if (!candidateRepository.existsById(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Candidate not found with ID: " + id);
 
-        }else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found with ID: " + id);
-        }
+        candidateRepository.deleteById(id);
     }
 }

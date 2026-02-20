@@ -1,7 +1,6 @@
 package edu.icet.ecom.Controller;
 
 import edu.icet.ecom.Model.Dto.candidater_dto;
-import edu.icet.ecom.Model.Dto.interviewSlot_dto;
 import edu.icet.ecom.Service.candidate_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,27 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("candidate")
+@RequestMapping("/candidate")
+@CrossOrigin(origins = "http://localhost:4200")
 public class candidate_Controller {
+
     @Autowired
-    candidate_service candidateService;
+    private candidate_service candidateService;
+
     @GetMapping("/all")
-    public List<candidater_dto> getAllcandidate(){
+    public List<candidater_dto> getAllCandidate() {
         return candidateService.getAllCandidate();
     }
-    @PostMapping("/add")
-    public void addCandidate(@RequestBody candidater_dto candidatedto){
-        candidateService.addCandidate(candidatedto);
-    }
-    @PutMapping("/update/{id}")
-    public ResponseEntity<candidater_dto> updateCandidate(@PathVariable Long id, @RequestBody candidater_dto candidatedto){
-        candidater_dto UpdateSlot =candidateService.updateCandidate(id,candidatedto);
-        return ResponseEntity.ok(UpdateSlot);
 
+    @PostMapping("/add")
+    public void addCandidate(@RequestBody candidater_dto dto) {
+        candidateService.addCandidate(dto);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<candidater_dto> updateCandidate(@PathVariable Long id, @RequestBody candidater_dto dto) {
+        return ResponseEntity.ok(candidateService.updateCandidate(id, dto));
+    }
+
     @DeleteMapping("/{id}")
-    public void deletecandidate(@PathVariable Long id){
+    public void deleteCandidate(@PathVariable Long id) {
         candidateService.deleteCandidate(id);
     }
-
 }
