@@ -69,4 +69,29 @@ public class booking_service {
 
         return response;
     }
+
+    public List<booking_dto> ViewBooking() {
+
+        return bookingRepository.findAll().stream().map(booking -> {
+
+            booking_dto dto = new booking_dto();
+
+            dto.setInterviewSlotId(booking.getInterviewSlot().getId());
+            dto.setStartTime(booking.getInterviewSlot().getStartTime());
+            dto.setEndTime(booking.getInterviewSlot().getEndTime());
+            dto.setStatus(booking.getInterviewSlot().isStatus());
+
+            dto.setCandidateName(
+                    booking.getCandidate().getFirstname() + " " +
+                            booking.getCandidate().getLastname()
+            );
+            dto.setCandidateEmail(booking.getCandidate().getEmail());
+
+            dto.setInterviewerName(booking.getInterviewer().getName());
+            dto.setInterviewerDepartment(booking.getInterviewer().getDepartment());
+
+            return dto;
+
+        }).toList();
+    }
 }

@@ -6,8 +6,10 @@ import edu.icet.ecom.Service.booking_service;
 import edu.icet.ecom.Service.interviewSlot_service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("booking")
 @CrossOrigin(origins = "http://localhost:4200")
 public class Booking_Controller {
 
@@ -24,5 +26,9 @@ public class Booking_Controller {
     public interviewSlot_dto addBooking(@PathVariable Long slotId, @RequestBody booking_dto dto) {
         bookingService.createBooking(slotId, dto);
         return slotService.getSlotById(slotId);
+    }
+    @GetMapping("/all")
+    public List<booking_dto>viewBokking(){
+        return bookingService.ViewBooking();
     }
 }

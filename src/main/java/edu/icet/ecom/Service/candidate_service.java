@@ -25,9 +25,10 @@ public class candidate_service {
                 .toList();
     }
 
-    public void addCandidate(candidater_dto dto) {
+    public candidater_dto addCandidate(candidater_dto dto) {
         candidater_entity candidate = modelMapper.map(dto, candidater_entity.class);
-        candidateRepository.save(candidate);
+        candidater_entity saved = candidateRepository.save(candidate);
+        return modelMapper.map(saved, candidater_dto.class);
     }
 
     public candidater_dto updateCandidate(Long id, candidater_dto dto) {

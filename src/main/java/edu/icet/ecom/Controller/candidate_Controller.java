@@ -22,8 +22,9 @@ public class candidate_Controller {
     }
 
     @PostMapping("/add")
-    public void addCandidate(@RequestBody candidater_dto dto) {
-        candidateService.addCandidate(dto);
+    public ResponseEntity<candidater_dto> addCandidate(@RequestBody candidater_dto dto) {
+        candidater_dto saved = candidateService.addCandidate(dto);
+        return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/update/{id}")
